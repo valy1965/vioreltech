@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Contact ViorelTech – Service electronice Galați</title>
+  <meta name="description" content="Contactează ViorelTech Galați pentru reparații electronice, centrale, TV, climatizare. Program flexibil, răspuns rapid.">
+  <style>
+    /* Variabile pentru culori și stiluri - consistente cu index.html */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --accent: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --text: #334155;
+    }
+    
+    /* Resetare și stiluri de bază */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+    
+    /* Header și navigație */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8fafc" width="100" height="100"/><path fill="%232563eb" fill-opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+      background-size: cover;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Layout principal pentru contact */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    @media (min-width: 992px) {
+      .contact-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    /* Stiluri pentru informațiile de contact */
+    .contact-info {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .contact-info h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .contact-details {
+      list-style-type: none;
+    }
+    
+    .contact-details li {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .contact-details strong {
+      color: var(--dark);
+      min-width: 90px;
+      display: inline-block;
+    }
+    
+    .contact-details a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-details a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .icon {
+      background-color: var(--primary);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    /* Stiluri pentru formular */
+    .contact-form {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .contact-form h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    /* Harta */
+    .map-container {
+      margin-top: 2rem;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .map-container h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .map-placeholder {
+      background-color: #eee;
+      height: 300px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+      <div class="nav">
+        <a href="index.html">Acasă</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="bazar.html">Bazar</a>
+        <a href="analizor-condensatori.html">Test Condensatori</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>📬 Contact ViorelTech Electroservice</h1>
+      <p>Suntem aici pentru a vă ajuta cu orice problemă electronică</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Date de contact</h2>
+        <ul class="contact-details">
+          <li>
+            <div class="icon">📞</div>
+            <div>
+              <strong>Telefon:</strong><br>
+              <a href="tel:+40745160354">+40 745 160 354</a>
+            </div>
+          </li>
+          <li>
+            <div class="icon">📧</div>
+            <div>
+              <strong>Email:</strong><br>
+              <a href="mailto:vioreltech@yahoo.com">vioreltech@yahoo.com</a>
+            </div>
+          </li>
+          <li>
+            <div class="icon">💬</div>
+            <div>
+              <strong>WhatsApp:</strong><br>
+              <a href="https://wa.me/40745160354">Trimite mesaj</a>
+            </div>
+          </li>
+          <li>
+            <div class="icon">📍</div>
+            <div>
+              <strong>Adresă:</strong><br>
+              Galați, România
+            </div>
+          </li>
+          <li>
+            <div class="icon">🕒</div>
+            <div>
+              <strong>Program:</strong><br>
+              Luni-Vineri: 9:00-18:00<br>
+              Sâmbătă: 10:00-14:00<br>
+              Duminică: Închis
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-form">
+        <h2>Trimite un mesaj</h2>
+        <form action="mailto:vioreltech@yahoo.com" method="post" enctype="text/plain">
+          <div class="form-group">
+            <label for="nume">Nume și prenume:</label>
+            <input type="text" id="nume" name="nume" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+          </div>
+
+          <div class="form-group">
+            <label for="telefon">Telefon:</label>
+            <input type="tel" id="telefon" name="telefon" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mesaj">Mesaj:</label>
+            <textarea id="mesaj" name="mesaj" required placeholder="Descrie problema sau cererea ta..."></textarea>
+          </div>
+
+          <button type="submit" class="btn">Trimite mesaj</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <h2>Locația noastră</h2>
+      <div class="map-placeholder">
+        <p>🌍 Harta va fi afișată aici - Galați, România</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>📧 vioreltech@yahoo.com | 📞 0745 160 354</p>
+        <p>📍 Galați, România</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+        </div>
+        <p>© 2023 ViorelTech Electroservice. Toate drepturile rezervate.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

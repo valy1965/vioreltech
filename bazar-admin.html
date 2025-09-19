@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bazar Admin – ViorelTech</title>
+  <meta name="description" content="Formular intern ViorelTech pentru generarea rapidă de carduri HTML pentru Bazar Online.">
+  <style>
+    /* Variabile pentru culori și stiluri - consistente cu celelalte pagini */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --accent: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --text: #334155;
+      --card-bg: #ffffff;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Resetare și stiluri de bază */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f9fafb;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Header și navigație */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Titlu principal */
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    /* Layout principal */
+    .admin-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    @media (max-width: 900px) {
+      .admin-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Formular */
+    .form-section {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .form-section h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-generate {
+      background-color: var(--success);
+    }
+    
+    .btn-generate:hover {
+      background-color: #0d9669;
+    }
+    
+    .btn-copy {
+      background-color: var(--secondary);
+    }
+    
+    .btn-copy:hover {
+      background-color: #475569;
+    }
+    
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    /* Preview section */
+    .preview-section {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .preview-section h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .preview-container {
+      background-color: var(--light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      min-height: 300px;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Output section */
+    .output-section {
+      background-color: var(--light);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      margin-top: 2rem;
+      grid-column: 1 / -1;
+    }
+    
+    .output-section h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    
+    .code-output {
+      background-color: #1e293b;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .output-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    /* Stiluri pentru cardul preview */
+    .item-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    
+    .item-card h3 {
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    .item-card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    
+    .item-card a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+      border-radius: 10px;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .form-actions, .output-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+        <div class="nav">
+          <a href="index.html">Acasă</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="bazar.html">Bazar</a>
+          <a href="analizor-condensatori.html">Test Condensatori</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <h1 class="page-title">🛠️ Bazar Admin – Generator Carduri</h1>
+
+    <div class="admin-container">
+      <div class="form-section">
+        <h2>Date modul</h2>
+        <form id="moduleForm">
+          <div class="form-group">
+            <label for="titlu">Denumire modul:</label>
+            <input type="text" id="titlu" required placeholder="Ex: BN41-01958B – Samsung LED">
+          </div>
+
+          <div class="form-group">
+            <label for="categorie">Categorie:</label>
+            <select id="categorie">
+              <option value="tv">📺 Plăci TV recuperate</option>
+              <option value="smps">🔌 Module SMPS și controlere</option>
+              <option value="components">🧰 Diverse componente</option>
+              <option value="other">🔧 Altele</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="stare">Stare:</label>
+            <input type="text" id="stare" placeholder="Ex: Nou / Recuperat / Testat">
+          </div>
+
+          <div class="form-group">
+            <label for="compat">Compatibilitate / Utilizare:</label>
+            <textarea id="compat" placeholder="Ex: TV LED 32–40” Samsung"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tranzactie">Tip tranzacție:</label>
+              <select id="tranzactie">
+                <option value="schimb">Schimb</option>
+                <option value="vanzare">Vânzare</option>
+                <option value="both">Schimb sau vânzare</option>
+                <option value="rezerva">Rezervă</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="stoc">Stoc disponibil:</label>
+              <input type="text" id="stoc" placeholder="Ex: 3 bucăți">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact">Contact preferat:</label>
+            <select id="contact">
+              <option value="whatsapp">WhatsApp</option>
+              <option value="email">Email</option>
+              <option value="both">WhatsApp sau Email</option>
+              <option value="telefon">Telefon</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-generate" onclick="genereazaCard()">
+              <i class="fas fa-cog"></i> Generează card
+            </button>
+            <button type="reset" class="btn">
+              <i class="fas fa-redo"></i> Resetează
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="preview-section">
+        <h2>Preview card</h2>
+        <div class="preview-container">
+          <div class="item-card" id="cardPreview">
+            <h3>Exemplu modul</h3>
+            <p><strong>Stare:</strong> Nou, testat</p>
+            <p><strong>Compatibilitate:</strong> TV LED 32–40” Samsung</p>
+            <p><strong>Tranzacție:</strong> Schimb sau vânzare</p>
+            <p><strong>Stoc:</strong> 2 bucăți disponibile</p>
+            <p><strong>Contact:</strong> <a href="https://wa.me/40745160354">WhatsApp</a> / <a href="mailto:vioreltech@yahoo.com">email</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="output-section">
+      <h2>Cod HTML generat</h2>
+      <div class="code-output" id="rezultat">
+        <!-- Aici va apărea codul generat -->
+      </div>
+      <div class="output-actions">
+        <button class="btn btn-copy" onclick="copyToClipboard()">
+          <i class="fas fa-copy"></i> Copiază codul
+        </button>
+        <button class="btn" onclick="clearForm()">
+          <i class="fas fa-broom"></i> Curăță tot
+        </button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <p>📧 vioreltech@yahoo.com | 📞 0745 160 354</p>
+        <p>📍 Galați, România</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+        </div>
+        <p>© 2023 ViorelTech Electroservice. Toate drepturile rezervate.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script>
+    function genereazaCard() {
+      const titlu = document.getElementById("titlu").value || "Denumire modul";
+      const categorie = document.getElementById("categorie").value;
+      const stare = document.getElementById("stare").value || "Nou, testat";
+      const compat = document.getElementById("compat").value || "Specificații de compatibilitate";
+      const tranzactieSelect = document.getElementById("tranzactie");
+      const tranzactie = tranzactieSelect.options[tranzactieSelect.selectedIndex].text;
+      const stoc = document.getElementById("stoc").value || "1 bucată";
+      const contactSelect = document.getElementById("contact");
+      const contactType = contactSelect.value;
+      
+      let contactHTML = "";
+      switch(contactType) {
+        case "whatsapp":
+          contactHTML = '<a href="https://wa.me/40745160354">WhatsApp</a>';
+          break;
+        case "email":
+          contactHTML = '<a href="mailto:vioreltech@yahoo.com">email</a>';
+          break;
+        case "both":
+          contactHTML = '<a href="https://wa.me/40745160354">WhatsApp</a> / <a href="mailto:vioreltech@yahoo.com">email</a>';
+          break;
+        case "telefon":
+          contactHTML = '<a href="tel:+40745160354">Telefon</a>';
+          break;
+      }
+
+      const html = `
+<div class="item-card">
+  <h3>${titlu}</h3>
+  <p><strong>Stare:</strong> ${stare}</p>
+  <p><strong>Compatibilitate:</strong> ${compat}</p>
+  <p><strong>Tranzacție:</strong> ${tranzactie}</p>
+  <p><strong>Stoc:</strong> ${stoc}</p>
+  <p><strong>Contact:</strong> ${contactHTML}</p>
+</div>`;
+
+      // Actualizează preview-ul
+      document.getElementById("cardPreview").innerHTML = `
+  <h3>${titlu}</h3>
+  <p><strong>Stare:</strong> ${stare}</p>
+  <p><strong>Compatibilitate:</strong> ${compat}</p>
+  <p><strong>Tranzacție:</strong> ${tranzactie}</p>
+  <p><strong>Stoc:</strong> ${stoc}</p>
+  <p><strong>Contact:</strong> ${contactHTML}</p>`;
+
+      // Afișează codul generat
+      document.getElementById("rezultat").textContent = html.trim();
+    }
+
+    function copyToClipboard() {
+      const code = document.getElementById("rezultat").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Codul a fost copiat în clipboard!");
+      }).catch(err => {
+        console.error('Eroare la copiere: ', err);
+      });
+    }
+
+    function clearForm() {
+      document.getElementById("moduleForm").reset();
+      document.getElementById("rezultat").textContent = "";
+      document.getElementById("cardPreview").innerHTML = `
+  <h3>Exemplu modul</h3>
+  <p><strong>Stare:</strong> Nou, testat</p>
+  <p><strong>Compatibilitate:</strong> TV LED 32–40” Samsung</p>
+  <p><strong>Tranzacție:</strong> Schimb sau vânzare</p>
+  <p><strong>Stoc:</strong> 2 bucăți disponibile</p>
+  <p><strong>Contact:</strong> <a href="https://wa.me/40745160354">WhatsApp</a> / <a href="mailto:vioreltech@yahoo.com">email</a></p>`;
+    }
+
+    // Generează automat un exemplu la încărcarea paginii
+    window.addEventListener('load', function() {
+      setTimeout(genereazaCard, 500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bazar ViorelTech – Module disponibile</title>
+  <meta name="description" content="Module electronice disponibile pentru schimb sau vânzare: plăci TV, SMPS, senzori, drivere. Contact direct cu ViorelTech Galați.">
+  <style>
+    /* Variabile pentru culori și stiluri - consistente cu celelalte pagini */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --accent: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #334155;
+      --card-bg: #ffffff;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Resetare și stiluri de bază */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+    
+    /* Header și navigație */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8fafc" width="100" height="100"/><path fill="%232563eb" fill-opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+      background-size: cover;
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+    
+    /* Filtre categorii */
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    
+    .filter-btn {
+      background-color: var(--light);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Grid pentru produse */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .product-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-image {
+      height: 180px;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.5rem;
+    }
+    
+    .product-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-content h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    
+    .product-details {
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    
+    .product-details p {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .detail-label {
+      font-weight: 600;
+      min-width: 100px;
+      color: var(--dark);
+    }
+    
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .availability.in-stock {
+      color: var(--success);
+    }
+    
+    .availability.low-stock {
+      color: var(--warning);
+    }
+    
+    .transaction-type {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+    
+    .transaction-type.sale {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+    
+    .transaction-type.exchange {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+    
+    .transaction-type.both {
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+    }
+    
+    .product-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+    
+    .btn {
+      flex: 1;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-whatsapp {
+      background-color: #25D366;
+    }
+    
+    .btn-whatsapp:hover {
+      background-color: #128C7E;
+    }
+    
+    .btn-email {
+      background-color: var(--secondary);
+    }
+    
+    .btn-email:hover {
+      background-color: #475569;
+    }
+    
+    /* Categorie titluri */
+    .category-title {
+      text-align: center;
+      margin: 3rem 0 1.5rem;
+      position: relative;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .category-title:after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: var(--accent);
+      margin: 0.5rem auto 0;
+    }
+    
+    /* Contact section */
+    .contact-section {
+      background-color: var(--light);
+      padding: 3rem 2rem;
+      border-radius: 8px;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    
+    .contact-section h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .contact-section p {
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      color: var(--secondary);
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+      <div class="nav">
+        <a href="index.html">Acasă</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="bazar.html">Bazar</a>
+        <a href="analizor-condensatori.html">Test Condensatori</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>🛒 Bazar ViorelTech</h1>
+      <p>Module electronice disponibile pentru schimb sau vânzare. Toate sunt testate, păstrate în condiții optime și pot fi utile în proiecte sau reparații.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="category-filters">
+      <button class="filter-btn active" data-category="all">Toate</button>
+      <button class="filter-btn" data-category="tv">Plăci TV</button>
+      <button class="filter-btn" data-category="smps">SMPS</button>
+      <button class="filter-btn" data-category="components">Componente</button>
+    </div>
+
+    <h2 class="category-title">📺 Plăci TV recuperate</h2>
+    
+    <div class="products-grid">
+      <!-- Produs 1 -->
+      <div class="product-card" data-category="tv">
+        <div class="product-image">📺</div>
+        <div class="product-content">
+          <h3>BN41-01958B – Samsung LED</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Recuperată, testată complet</p>
+            <p><span class="detail-label">Compatibilitate:</span> TV LED 32–40” Samsung</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability in-stock">✓ 2 bucăți</span></p>
+            <span class="transaction-type both">Schimb sau vânzare</span>
+          </div>
+          <div class="product-actions">
+            <a href="https://wa.me/40745160354" class="btn btn-whatsapp">WhatsApp</a>
+            <a href="mailto:vioreltech@yahoo.com" class="btn btn-email">Email</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produs 2 -->
+      <div class="product-card" data-category="tv">
+        <div class="product-image">📺</div>
+        <div class="product-content">
+          <h3>Placă T-CON V320BJ2-CE1</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Nouă, nefolosită</p>
+            <p><span class="detail-label">Compatibilitate:</span> TV LED 32” LG / Vestel</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability low-stock">! 1 bucată</span></p>
+            <span class="transaction-type sale">Disponibilă contra cost</span>
+          </div>
+          <div class="product-actions">
+            <a href="mailto:vioreltech@yahoo.com" class="btn btn-email">Email</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produs 3 -->
+      <div class="product-card" data-category="tv">
+        <div class="product-image">🔌</div>
+        <div class="product-content">
+          <h3>CB_V869-20</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Nou</p>
+            <p><span class="detail-label">Utilizare:</span> Generare tensiune VGL și VGH</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability in-stock">✓ 2 bucăți</span></p>
+            <span class="transaction-type sale">Vânzare</span>
+          </div>
+          <div class="product-actions">
+            <a href="https://wa.me/40745160354" class="btn btn-whatsapp">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="category-title">🔌 Module SMPS și controlere</h2>
+    
+    <div class="products-grid">
+      <!-- Produs 4 -->
+      <div class="product-card" data-category="smps">
+        <div class="product-image">⚡</div>
+        <div class="product-content">
+          <h3>Modul TNY277GN + KBPC5010</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Nou, achiziționat de pe Aliexpress</p>
+            <p><span class="detail-label">Utilizare:</span> Reparare surse centrale termice Buderus</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability in-stock">✓ 5 bucăți</span></p>
+            <span class="transaction-type exchange">Disponibil pentru schimb</span>
+          </div>
+          <div class="product-actions">
+            <a href="https://wa.me/40745160354" class="btn btn-whatsapp">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="category-title">🧰 Diverse componente</h2>
+    
+    <div class="products-grid">
+      <!-- Produs 5 -->
+      <div class="product-card" data-category="components">
+        <div class="product-image">🔧</div>
+        <div class="product-content">
+          <h3>Driver motor L298N</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Nou, în ambalaj</p>
+            <p><span class="detail-label">Utilizare:</span> Cafetiere automate, proiecte Arduino</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability in-stock">✓ 4 bucăți</span></p>
+            <span class="transaction-type both">Schimb sau vânzare</span>
+          </div>
+          <div class="product-actions">
+            <a href="mailto:vioreltech@yahoo.com" class="btn btn-email">Email</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produs 6 -->
+      <div class="product-card" data-category="components">
+        <div class="product-image">🔧</div>
+        <div class="product-content">
+          <h3>Senzor debit Necta</h3>
+          <div class="product-details">
+            <p><span class="detail-label">Stare:</span> Recuperat, testat</p>
+            <p><span class="detail-label">Utilizare:</span> Cafetiere automate Necta / Saeco</p>
+            <p><span class="detail-label">Stoc:</span> <span class="availability low-stock">! 2 bucăți</span></p>
+            <span class="transaction-type exchange">Disponibil pentru schimb</span>
+          </div>
+          <div class="product-actions">
+            <a href="https://wa.me/40745160354" class="btn btn-whatsapp">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-section">
+      <h2>Ai nevoie de un produs sau ai întrebări?</h2>
+      <p>Contactează-ne direct pentru detalii, disponibilitate sau oferte personalizate.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="https://wa.me/40745160354" class="btn btn-whatsapp">💬 WhatsApp</a>
+        <a href="mailto:vioreltech@yahoo.com" class="btn btn-email">📧 Email</a>
+        <a href="tel:+40745160354" class="btn">📞 Sună acum</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>📧 vioreltech@yahoo.com | 📞 0745 160 354</p>
+        <p>📍 Galați, România</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+        </div>
+        <p>© 2023 ViorelTech Electroservice. Toate drepturile rezervate.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Funcționalitate pentru filtrele de categorii
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const productCards = document.querySelectorAll('.product-card');
+      const categoryTitles = document.querySelectorAll('.category-title');
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Elimină clasa active de la toate butoanele
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          // Adaugă clasa active la butonul apăsat
+          button.classList.add('active');
+          
+          const category = button.getAttribute('data-category');
+          
+          // Filtrează produsele
+          productCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          
+          // Ascunde sau afișează titlurile de categorie
+          if (category === 'all') {
+            categoryTitles.forEach(title => title.style.display = 'block');
+          } else {
+            categoryTitles.forEach(title => title.style.display = 'none');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

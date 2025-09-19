@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analizor de Condensatori - ViorelTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #4f46e5;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --gray: #64748b;
+      --border-radius: 12px;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    /* Header și navigație */
+    header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .app-header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .app-header h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .app-header p {
+      opacity: 0.9;
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .logo-icon {
+      font-size: 32px;
+    }
+
+    .content {
+      padding: 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+    }
+
+    .input-section, .result-section {
+      background: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+
+    .input-section h2,
+    .result-section h2 {
+      font-size: 20px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .input-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .input-group i {
+      color: var(--primary);
+      width: 20px;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      transition: var(--transition);
+      background: #fff;
+      color: var(--dark);
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .input-hint {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 5px;
+      padding-left: 28px;
+    }
+
+    .quality-bar {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .quality-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: var(--transition);
+    }
+
+    .result-data {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .data-item {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .data-label {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 5px;
+    }
+
+    .data-value {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .verdict {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      background: white;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+      transition: var(--transition);
+    }
+
+    .application {
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      background: white;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border: 1px solid #e2e8f0;
+      transition: var(--transition);
+    }
+
+    .excellent {
+      color: var(--success);
+      background-color: rgba(16, 185, 129, 0.12);
+      border-color: var(--success);
+    }
+
+    .good {
+      color: var(--primary);
+      background-color: rgba(37, 99, 235, 0.12);
+      border-color: var(--primary);
+    }
+
+    .acceptable {
+      color: var(--warning);
+      background-color: rgba(245, 158, 11, 0.12);
+      border-color: var(--warning);
+    }
+
+    .poor {
+      color: var(--danger);
+      background-color: rgba(239, 68, 68, 0.12);
+      border-color: var(--danger);
+    }
+
+    .score {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 15px 0;
+      color: var(--primary-dark);
+      letter-spacing: 1px;
+    }
+
+    .info-section {
+      margin-top: 25px;
+      padding: 15px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .info-section h3 {
+      margin-bottom: 10px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-item {
+      margin-bottom: 15px;
+    }
+
+    .info-item h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+
+    .info-item p {
+      font-size: 14px;
+      color: var(--gray);
+      padding-left: 28px;
+    }
+
+    .auto-update-notice {
+      text-align: center;
+      padding: 10px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: var(--border-radius);
+      margin-top: 15px;
+      color: var(--primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .frequency-info {
+      background: rgba(245, 158, 11, 0.13);
+      border-left: 4px solid var(--warning);
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+
+    .frequency-info h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--warning);
+      margin-bottom: 5px;
+    }
+
+    .frequency-info p {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .preset-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .preset-btn {
+      padding: 8px 12px;
+      background: var(--light);
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .preset-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .footer {
+      background: var(--light);
+      padding: 15px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+        <div class="nav">
+          <a href="index.html">Acasă</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="bazar.html">Bazar</a>
+          <a href="analizor-condensatori.html">Test Condensatori</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-header">
+      <h1><i class="fas fa-capacitor logo-icon"></i> Analizor Condensatori</h1>
+      <p>ViorelTech - Instrument profesional de analiză a condensatoarelor pentru DE-5000</p>
+    </div>
+
+    <div class="content">
+      <div class="input-section">
+        <h2>Date de intrare <i class="fas fa-tools"></i></h2>
+        
+        <div class="input-group">
+          <label for="frequency"><i class="fas fa-waveform"></i> Frecvență de test:</label>
+          <select id="frequency">
+            <option value="100">100 Hz (Electrolitici)</option>
+            <option value="120">120 Hz (Electrolitici)</option>
+            <option value="1000">1 kHz (Poliester, Ceramici)</option>
+            <option value="10000">10 kHz (Poliester, Ceramici)</option>
+            <option value="100000">100 kHz (SMD, Tantal)</option>
+          </select>
+          <div class="input-hint">Selectează frecvența de măsurare corespunzătoare</div>
+        </div>
+        
+        <div class="input-group">
+          <label for="cF"><i class="fas fa-bolt"></i> Capacitate măsurată (µF):</label>
+          <input type="number" id="cF" value="293.9" step="0.1" min="0">
+          <div class="input-hint">Capacitatea reală măsurată cu DE-5000</div>
+        </div>
+
+        <div class="input-group">
+          <label for="nF"><i class="fas fa-tag"></i> Valoare nominală (µF):</label>
+          <input type="number" id="nF" value="330" step="0.1" min="0">
+          <div class="input-hint">Valoarea teoretică a condensatorului</div>
+        </div>
+
+        <div class="input-group">
+          <label for="eF"><i class="fas fa-resistance"></i> ESR măsurat (Ω):</label>
+          <input type="number" id="eF" value="0.20" step="0.01" min="0">
+          <div class="input-hint">Rezistența serie echivalentă</div>
+        </div>
+
+        <div class="input-group">
+          <label for="dF"><i class="fas fa-wave-square"></i> D (factor de disipație):</label>
+          <input type="number" id="dF" value="0.046" step="0.001" min="0">
+          <div class="input-hint">Tangenta unghiului de pierderi</div>
+        </div>
+
+        <div class="input-group">
+          <label for="thetaF"><i class="fas fa-angle-left"></i> θ (defazaj, °):</label>
+          <input type="number" id="thetaF" value="-87.3" step="0.1">
+          <div class="input-hint">Unghiul de defazaj între tensiune și curent</div>
+        </div>
+
+        <div class="preset-buttons">
+          <div class="preset-btn" onclick="loadPreset('excellent')">Exemplu excelent</div>
+          <div class="preset-btn" onclick="loadPreset('good')">Exemplu bun</div>
+          <div class="preset-btn" onclick="loadPreset('acceptable')">Exemplu acceptabil</div>
+          <div class="preset-btn" onclick="loadPreset('poor')">Exemplu degradat</div>
+        </div>
+
+        <div class="auto-update-notice">
+          <i class="fas fa-sync-alt"></i> Rezultatele se actualizează automat
+        </div>
+      </div>
+
+      <div class="result-section">
+        <h2>Rezultate <i class="fas fa-chart-line"></i></h2>
+        
+        <div class="score" id="score">Scor: 82/100</div>
+        
+        <div class="quality-bar">
+          <div class="quality-fill" id="qualityBar" style="width: 82%; background-color: #10b981;"></div>
+        </div>
+        
+        <div class="result-data">
+          <div class="data-item">
+            <div class="data-label">Capacitate</div>
+            <div class="data-value" id="capValue">293.9 µF (89.1%)</div>
+          </div>
+          <div class="data-item">
+            <div class="data-label">ESR</div>
+            <div class="data-value" id="esrValue">0.20 Ω</div>
+          </div>
+          <div class="data-item">
+            <div class="data-label">Factor D</div>
+            <div class="data-value" id="dValue">0.046</div>
+          </div>
+          <div class="data-item">
+            <div class="data-label">Defazaj</div>
+            <div class="data-value" id="thetaValue">-87.3°</div>
+          </div>
+        </div>
+        
+        <div class="frequency-info">
+          <h4><i class="fas fa-info-circle"></i> Frecvență de test: <span id="currentFrequency">100</span> Hz</h4>
+          <p>Parametrii de evaluare sunt ajustați pentru frecvența selectată. Valorile ESR și D variază semnificativ cu frecvența.</p>
+        </div>
+        
+        <div class="verdict" id="verdict">
+          ✅ Condensator excelent – ideal pentru semnal pur
+        </div>
+        
+        <div class="application" id="application">
+          🔍 Aplicație recomandată: <span>🔊 Audio de calitate</span>
+        </div>
+
+        <div class="info-section">
+          <h3><i class="fas fa-info-circle"></i> Despre parametrii electrici</h3>
+          
+          <div class="info-item">
+            <h4><i class="fas fa-bolt"></i> Capacitate</h4>
+            <p>Capacitatea reală comparată cu cea nominală. Condensatorii electrolitici pot avea toleranțe de până la ±20%.</p>
+          </div>
+          
+          <div class="info-item">
+            <h4><i class="fas fa-resistance"></i> ESR</h4>
+            <p>Rezistența serie echivalentă - o valoare mică indică o calitate superioară și performanță mai bună la frecvențe înalte. ESR-ul scade odată cu creșterea frecvenței.</p>
+          </div>
+          
+          <div class="info-item">
+            <h4><i class="fas fa-wave-square"></i> Factorul de disipație (D)</h4>
+            <p>Măsoară pierderile de energie în condensator. Valori mici indică eficiență ridicată. Factorul de disipație este dependent de frecvență.</p>
+          </div>
+          
+          <div class="info-item">
+            <h4><i class="fas fa-waveform"></i> Frecvența de test</h4>
+            <p>Parametrii condensatoarelor variază semnificativ cu frecvența. Condensatorii electrolitici se testează la 100-120Hz, cei ceramici la 1kHz-10kHz, iar cei SMD la frecvențe mai înalte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2023 ViorelTech Electroservice | Instrument de analiză pentru profesioniști</p>
+    </div>
+  </div>
+
+  <script>
+    // Adăugare funcționalitate de update în timp real
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+      input.addEventListener('input', evaluate);
+    });
+
+    // Funcție pentru încărcarea presetărilor
+    function loadPreset(type) {
+      const presets = {
+        excellent: { cF: 318, nF: 330, eF: 0.08, dF: 0.018, thetaF: -89.2, frequency: 100 },
+        good: { cF: 293.9, nF: 330, eF: 0.20, dF: 0.046, thetaF: -87.3, frequency: 100 },
+        acceptable: { cF: 270, nF: 330, eF: 0.45, dF: 0.095, thetaF: -84.5, frequency: 100 },
+        poor: { cF: 210, nF: 330, eF: 1.20, dF: 0.250, thetaF: -75.8, frequency: 100 }
+      };
+
+      const preset = presets[type];
+      if (!preset) return;
+
+      document.getElementById('cF').value = preset.cF;
+      document.getElementById('nF').value = preset.nF;
+      document.getElementById('eF').value = preset.eF;
+      document.getElementById('dF').value = preset.dF;
+      document.getElementById('thetaF').value = preset.thetaF;
+      document.getElementById('frequency').value = preset.frequency;
+
+      evaluate();
+    }
+
+    function evaluate() {
+      // Preia și validează valorile
+      let C = parseFloat(document.getElementById("cF").value) || 0;
+      let N = parseFloat(document.getElementById("nF").value) || 1;
+      let ESR = parseFloat(document.getElementById("eF").value) || 0;
+      let D = parseFloat(document.getElementById("dF").value) || 0;
+      let theta = parseFloat(document.getElementById("thetaF").value) || 0;
+      let frequency = parseInt(document.getElementById("frequency").value) || 100;
+      
+      // Actualizează afișarea frecvenței
+      document.getElementById("currentFrequency").textContent = frequency;
+
+      let deltaC = C / N;
+      let verdict = "";
+      let aplicatie = "";
+      let verdictClass = "";
+      let score = 0;
+
+      // Ajustarea parametrilor în funcție de frecvență
+      let esrMultiplier = 1;
+      let dMultiplier = 1;
+      
+      if (frequency >= 1000) {
+        esrMultiplier = 0.7; // ESR scade la frecvențe mai înalte
+        dMultiplier = 0.8;   // D se modifică la frecvențe mai înalte
+      }
+      
+      if (frequency >= 10000) {
+        esrMultiplier = 0.5;
+        dMultiplier = 0.6;
+      }
+
+      // Calculăm scorul pe baza parametrilor (0-100)
+      // Capacitate (30% din scor) - comparăm cu valoarea nominală
+      let capScore = Math.max(0, 30 - Math.abs(1 - deltaC) * 100);
+      
+      // ESR (30% din scor) - cu cât e mai mic, cu atât mai bine (ajustat pentru frecvență)
+      let esrScore = Math.max(0, 30 - (ESR * 100 * esrMultiplier));
+      
+      // Factorul D (20% din scor) - cu cât e mai mic, cu atât mai bine (ajustat pentru frecvență)
+      let dScore = Math.max(0, 20 - (D * 200 * dMultiplier));
+      
+      // Defazaj (20% din scor) - cu cât e mai aproape de -90°, cu atât mai bine
+      let thetaScore = Math.max(0, 20 - (Math.abs(-90 - theta) * 0.4));
+      
+      score = Math.min(100, Math.round(capScore + esrScore + dScore + thetaScore));
+
+      // Actualizează scorul și bara de calitate
+      document.getElementById("score").textContent = `Scor: ${score}/100`;
+      
+      const qualityBar = document.getElementById("qualityBar");
+      qualityBar.style.width = `${score}%`;
+      
+      // Setează culoarea în funcție de scor
+      if (score >= 80) {
+        qualityBar.style.backgroundColor = "#10b981"; // Verde
+      } else if (score >= 60) {
+        qualityBar.style.backgroundColor = "#3b82f6"; // Albastru
+      } else if (score >= 40) {
+        qualityBar.style.backgroundColor = "#f59e0b"; // Galben
+      } else {
+        qualityBar.style.backgroundColor = "#ef4444"; // Roșu
+      }
+
+      // Actualizează valorile afișate
+      document.getElementById("capValue").textContent = `${C} µF (${(deltaC * 100).toFixed(1)}%)`;
+      document.getElementById("esrValue").textContent = `${ESR.toFixed(2)} Ω`;
+      document.getElementById("dValue").textContent = D.toFixed(3);
+      document.getElementById("thetaValue").textContent = `${theta.toFixed(1)}°`;
+
+      // Clasificare - criterii ajustate pentru frecvență
+      let esrThreshold, dThreshold, thetaThreshold;
+      
+      if (frequency <= 120) {
+        // Frecvențe joase (electrolitici)
+        esrThreshold = [0.1, 0.15, 0.3];
+        dThreshold = [0.02, 0.03, 0.06];
+        thetaThreshold = [-89, -88, -85];
+      } else if (frequency <= 1000) {
+        // Frecvențe medii
+        esrThreshold = [0.05, 0.1, 0.2];
+        dThreshold = [0.015, 0.025, 0.05];
+        thetaThreshold = [-89.5, -88.5, -86];
+      } else {
+        // Frecvențe înalte
+        esrThreshold = [0.03, 0.08, 0.15];
+        dThreshold = [0.01, 0.02, 0.04];
+        thetaThreshold = [-89.8, -89, -87];
+      }
+
+      // Aplicarea criteriilor
+      if (ESR < esrThreshold[0] && D < dThreshold[0] && theta <= thetaThreshold[0]) {
+        aplicatie = "🔊 Audio de calitate";
+        verdict = "✅ Condensator excelent – ideal pentru semnal pur";
+        verdictClass = "excellent";
+      } else if (ESR < esrThreshold[1] && D < dThreshold[1] && theta <= thetaThreshold[1]) {
+        aplicatie = "⚡ SMPS / Snubber";
+        verdict = "✅ Condensator bun – potrivit pentru comutație rapidă";
+        verdictClass = "good";
+      } else if (ESR < esrThreshold[2] && D < dThreshold[2] && theta <= thetaThreshold[2]) {
+        aplicatie = "🔧 Uz general / filtrare";
+        verdict = "⚠️ Condensator acceptabil – utilizabil în aplicații necritice";
+        verdictClass = "acceptable";
+      } else {
+        aplicatie = "❌ Nerecomandat";
+        verdict = "❗ Condensator degradat – pierderi mari sau comportament afectat";
+        verdictClass = "poor";
+      }
+
+      // Actualizează verdictul și aplicația
+      document.getElementById("verdict").textContent = verdict;
+      document.getElementById("verdict").className = `verdict ${verdictClass}`;
+      
+      const appElement = document.getElementById("application");
+      appElement.innerHTML = `🔍 Aplicație recomandată: <span>${aplicatie}</span>`;
+      appElement.className = `application ${verdictClass}`;
+    }
+
+    // Rulează evaluarea automat la încărcare pentru a prezenta un exemplu
+    window.addEventListener('load', function() {
+      setTimeout(evaluate, 300);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Catalog componente electronice – ViorelTech Galați</title>
+  <meta name="description" content="Vitrină tehnică ViorelTech: componente testate pentru SMPS, centrale termice, climatizare inverter, TV, cafetiere. Contact direct pentru detalii.">
+  <style>
+    /* Variabile pentru culori și stiluri - consistente cu celelalte pagini */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --accent: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --text: #334155;
+      --card-bg: #ffffff;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Resetare și stiluri de bază */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+    
+    /* Header și navigație */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8fafc" width="100" height="100"/><path fill="%232563eb" fill-opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+      background-size: cover;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+    
+    /* Filtre categorii */
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    
+    .filter-btn {
+      background-color: var(--light);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Grid pentru componente */
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .component-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .component-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .component-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .component-card p {
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+    
+    .component-card ul {
+      list-style-type: none;
+      margin-top: 1rem;
+    }
+    
+    .component-card li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .component-card li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .component-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+    
+    .availability {
+      color: var(--success);
+      font-weight: 500;
+    }
+    
+    /* Buton de contact */
+    .contact-cta {
+      text-align: center;
+      margin: 2rem 0;
+      padding: 2rem;
+      background-color: var(--light);
+      border-radius: 8px;
+    }
+    
+    .contact-cta h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0.5rem;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-whatsapp {
+      background-color: #25D366;
+    }
+    
+    .btn-whatsapp:hover {
+      background-color: #128C7E;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+      <div class="nav">
+        <a href="index.html">Acasă</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="bazar.html">Bazar</a>
+        <a href="analizor-condensatori.html">Test Condensatori</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>📦 Catalog tehnic – Componente validate în atelier</h1>
+      <p>Toate componentele prezentate mai jos sunt testate, validate și utilizate în reparații reale.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="category-filters">
+      <button class="filter-btn active" data-category="all">Toate</button>
+      <button class="filter-btn" data-category="smps">Surse în comutație</button>
+      <button class="filter-btn" data-category="central">Centrale termice</button>
+      <button class="filter-btn" data-category="tv">TV și module</button>
+      <button class="filter-btn" data-category="coffee">Cafetiere</button>
+      <button class="filter-btn" data-category="universal">Componente universale</button>
+    </div>
+
+    <div class="components-grid">
+      <!-- Surse în comutație (SMPS) -->
+      <div class="component-card" data-category="smps">
+        <h3>TNY277GN</h3>
+        <p>Controler flyback, utilizat frecvent în surse Buderus</p>
+        <div class="component-meta">
+          <span class="category">SMPS</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="smps">
+        <h3>Condensator 10µF/450V</h3>
+        <p>Filtrare primară, testat ESR</p>
+        <div class="component-meta">
+          <span class="category">SMPS</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="smps">
+        <h3>Diode FR307</h3>
+        <p>Protecție la inversare, testate ESR</p>
+        <div class="component-meta">
+          <span class="category">SMPS</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="smps">
+        <h3>Transformator EE16</h3>
+        <p>Recuperat din surse funcționale, verificat inductanță</p>
+        <div class="component-meta">
+          <span class="category">SMPS</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <!-- Centrale termice murale -->
+      <div class="component-card" data-category="central">
+        <h3>Optocuplor PC817</h3>
+        <p>Izolare semnal, utilizat în plăci Ariston și Viessmann</p>
+        <div class="component-meta">
+          <span class="category">Centrale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="central">
+        <h3>Triac BTA16-600B</h3>
+        <p>Comandă ventilator sau pompă, testat în atelier</p>
+        <div class="component-meta">
+          <span class="category">Centrale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="central">
+        <h3>NTC 10k</h3>
+        <p>Senzor de temperatură pentru controlul electronic</p>
+        <div class="component-meta">
+          <span class="category">Centrale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="central">
+        <h3>Releu Finder 10A</h3>
+        <p>Comutare fiabilă în circuite de comandă</p>
+        <div class="component-meta">
+          <span class="category">Centrale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <!-- Plăci TV și module T-CON -->
+      <div class="component-card" data-category="tv">
+        <h3>BN41-01958B</h3>
+        <p>Placă principală Samsung LED, recuperată și testată</p>
+        <div class="component-meta">
+          <span class="category">TV/Module</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="tv">
+        <h3>V320BJ2-CE1</h3>
+        <p>Modul T-CON compatibil LG / Vestel</p>
+        <div class="component-meta">
+          <span class="category">TV/Module</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="tv">
+        <h3>Inverter 6632L-0448A</h3>
+        <p>Alimentare CCFL, testat pe banc</p>
+        <div class="component-meta">
+          <span class="category">TV/Module</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <!-- Cafetiere automate -->
+      <div class="component-card" data-category="coffee">
+        <h3>Debitmetru Necta</h3>
+        <p>Senzor de debit recuperat, testat în atelier</p>
+        <div class="component-meta">
+          <span class="category">Cafetiere</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="coffee">
+        <h3>Driver motor L298N</h3>
+        <p>Control motor pentru dozare sau pompare</p>
+        <div class="component-meta">
+          <span class="category">Cafetiere</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="coffee">
+        <h3>Electrovalvă 12V</h3>
+        <p>Comandă apă, testată cu alimentare directă</p>
+        <div class="component-meta">
+          <span class="category">Cafetiere</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <!-- Componente universale -->
+      <div class="component-card" data-category="universal">
+        <h3>Conectori JST-XH</h3>
+        <p>Utilizați în module SMD și cablaje fine</p>
+        <div class="component-meta">
+          <span class="category">Universale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="universal">
+        <h3>Paste termoconductoare</h3>
+        <p>Pentru module de putere și radiatoare</p>
+        <div class="component-meta">
+          <span class="category">Universale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+
+      <div class="component-card" data-category="universal">
+        <h3>Condensatori Low ESR</h3>
+        <p>Selectați manual, testați cu DE-5000</p>
+        <div class="component-meta">
+          <span class="category">Universale</span>
+          <span class="availability">✓ În stoc</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-cta">
+      <h2>Ai nevoie de un component sau de sfaturi tehnice?</h2>
+      <p>Contactează-ne direct pentru detalii, disponibilitate sau recomandări.</p>
+      <a href="https://wa.me/40745160354" class="btn btn-whatsapp">💬 WhatsApp</a>
+      <a href="mailto:vioreltech@yahoo.com" class="btn">📧 Email</a>
+      <a href="tel:+40745160354" class="btn">📞 Sună acum</a>
+    </div>
+
+    <div class="contact-cta">
+      <h2>🧪 Testare online condensatori</h2>
+      <p>Folosește aplicația noastră de analiză pentru a verifica condensatorii</p>
+      <a href="analizor-condensatori.html" class="btn">🔍 Deschide aplicația de analiză</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>📧 vioreltech@yahoo.com | 📞 0745 160 354</p>
+        <p>📍 Galați, România</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+        </div>
+        <p>© 2023 ViorelTech Electroservice. Toate drepturile rezervate.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Funcționalitate pentru filtrele de categorii
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const componentCards = document.querySelectorAll('.component-card');
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Elimină clasa active de la toate butoanele
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          // Adaugă clasa active la butonul apăsat
+          button.classList.add('active');
+          
+          const category = button.getAttribute('data-category');
+          
+          // Filtrează componentele
+          componentCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

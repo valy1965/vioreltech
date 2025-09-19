@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog ViorelTech – Din atelier</title>
+  <meta name="description" content="Articole tehnice, studii de caz și tutoriale din atelierul ViorelTech Galați. Reparații reale, aplicații HTML și pregătiri pentru YouTube.">
+  <style>
+    /* Variabile pentru culori și stiluri - consistente cu celelalte pagini */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --accent: #f59e0b;
+      --light: #f8fafc;
+      --dark: #1e293b;
+      --success: #10b981;
+      --text: #334155;
+      --card-bg: #ffffff;
+      --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Resetare și stiluri de bază */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+    
+    /* Header și navigație */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23f8fafc" width="100" height="100"/><path fill="%232563eb" fill-opacity="0.2" d="M0 0h100v100H0z"/></svg>');
+      background-size: cover;
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 0 0 10px 10px;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+    
+    /* Filtre categorii */
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    
+    .filter-btn {
+      background-color: var(--light);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Grid pentru articole */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .article-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .article-image {
+      height: 200px;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+    
+    .article-content {
+      padding: 1.5rem;
+    }
+    
+    .article-content h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .article-content p {
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .article-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+    
+    .article-date {
+      color: var(--secondary);
+    }
+    
+    .article-category {
+      background-color: var(--light);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .read-more {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .read-more:hover {
+      color: var(--primary-dark);
+      gap: 0.7rem;
+    }
+    
+    /* Newsletter */
+    .newsletter {
+      background-color: var(--light);
+      padding: 3rem 2rem;
+      border-radius: 8px;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    
+    .newsletter h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      gap: 0.5rem;
+    }
+    
+    .newsletter-input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    /* Paginatie */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+    
+    .pagination-btn {
+      background-color: var(--light);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .pagination-btn.active, .pagination-btn:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo"><a href="index.html">ViorelTech Electroservice</a></div>
+      <div class="nav">
+        <a href="index.html">Acasă</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="bazar.html">Bazar</a>
+        <a href="analizor-condensatori.html">Test Condensatori</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>📘 Blog ViorelTech</h1>
+      <p>Din atelier, direct în practică. Aici documentez reparații reale, aplicații HTML, optimizări și pregătiri pentru conținut video educativ.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="category-filters">
+      <button class="filter-btn active" data-category="all">Toate</button>
+      <button class="filter-btn" data-category="reparatii">Reparații</button>
+      <button class="filter-btn" data-category="testare">Testare</button>
+      <button class="filter-btn" data-category="organizare">Organizare</button>
+      <button class="filter-btn" data-category="video">Conținut Video</button>
+    </div>
+
+    <div class="articles-grid">
+      <!-- Articol 1 -->
+      <div class="article-card" data-category="testare">
+        <div class="article-image">🔍</div>
+        <div class="article-content">
+          <h2>Cum testez un condensator cu DE-5000</h2>
+          <p>Folosesc frecvențe diferite în funcție de tipul condensatorului. La 100Hz testez electroliticii, iar la 10kHz verific ceramici sau SMD.</p>
+          <a href="analizor-condensatori.html" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">12 Octombrie 2023</span>
+            <span class="article-category">Testare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articol 2 -->
+      <div class="article-card" data-category="reparatii">
+        <div class="article-image">📺</div>
+        <div class="article-content">
+          <h2>Recuperarea unei plăci TV Samsung</h2>
+          <p>Am salvat o placă BN41-01958B de la un TV cu display spart. După testare completă, am inclus-o în Bazarul Online pentru schimb sau vânzare.</p>
+          <a href="bazar.html" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">5 Octombrie 2023</span>
+            <span class="article-category">Reparații</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articol 3 -->
+      <div class="article-card" data-category="organizare">
+        <div class="article-image">📊</div>
+        <div class="article-content">
+          <h2>Organizarea stocului critic</h2>
+          <p>Am creat o aplicație HTML care îmi permite să simulez bugetul pe categorii, cu subtotaluri și prețuri pe bucată.</p>
+          <a href="#" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">28 Septembrie 2023</span>
+            <span class="article-category">Organizare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articol 4 -->
+      <div class="article-card" data-category="video">
+        <div class="article-image">🎥</div>
+        <div class="article-content">
+          <h2>Pregătiri pentru YouTube</h2>
+          <p>Am integrat camera Adnonstar ADS106S în setup-ul de filmare. Urmează tutoriale detaliate despre reparații reale, cu explicații pas cu pas.</p>
+          <a href="#" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">20 Septembrie 2023</span>
+            <span class="article-category">Conținut Video</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articol 5 -->
+      <div class="article-card" data-category="testare">
+        <div class="article-image">🔧</div>
+        <div class="article-content">
+          <h2>De ce nu folosesc componente generice</h2>
+          <p>Evit condensatorii fără specificații clare de ESR sau temperatură. Prefer branduri testate în atelier, cu fiabilitate dovedită.</p>
+          <a href="#" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">15 Septembrie 2023</span>
+            <span class="article-category">Testare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articol 6 -->
+      <div class="article-card" data-category="reparatii">
+        <div class="article-image">🔥</div>
+        <div class="article-content">
+          <h2>Reparație centrală termică Buderus</h2>
+          <p>Am rezolvat o problemă de alimentare la o centrală termică Buderus prin înlocuirea condensatorilor de filtrare și a controller-ului TNY277GN.</p>
+          <a href="#" class="read-more">Citește mai mult →</a>
+          <div class="article-meta">
+            <span class="article-date">8 Septembrie 2023</span>
+            <span class="article-category">Reparații</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button class="pagination-btn active">1</button>
+      <button class="pagination-btn">2</button>
+      <button class="pagination-btn">3</button>
+      <button class="pagination-btn">→</button>
+    </div>
+
+    <div class="newsletter">
+      <h2>Abonează-te la newsletter</h2>
+      <p>Primește notificări despre noi articole, tutoriale și sfaturi tehnice direct din atelierul ViorelTech.</p>
+      <form class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Adresa ta de email" required>
+        <button type="submit" class="btn">Abonează-te</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>📧 vioreltech@yahoo.com | 📞 0745 160 354</p>
+        <p>📍 Galați, România</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+          <a href="#" aria-label="YouTube">📺</a>
+        </div>
+        <p>© 2023 ViorelTech Electroservice. Toate drepturile rezervate.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Funcționalitate pentru filtrele de categorii
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const articleCards = document.querySelectorAll('.article-card');
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Elimină clasa active de la toate butoanele
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          // Adaugă clasa active la butonul apăsat
+          button.classList.add('active');
+          
+          const category = button.getAttribute('data-category');
+          
+          // Filtrează articolele
+          articleCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
